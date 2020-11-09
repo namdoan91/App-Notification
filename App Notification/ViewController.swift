@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController {
     
@@ -103,9 +105,6 @@ class ViewController: UIViewController {
     }()
     
     let margin:CGFloat = 15
-    
-    let url = URL(String: "https://id.mvpapp.vn/api/v1/system/Login")
-
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubView()
@@ -181,6 +180,12 @@ class ViewController: UIViewController {
 
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "SecondViewController") as! SecondViewController
+        let url = "https://id.mvpapp.vn/api/v1/system/Login"
+        let par = ["username": "\(dangNhapText)","password": "\(matkhatText)"]
+        DispatchQueue.main.async {
+            Alamofire.Request(url, method: .POST, Parameters: par).responseJSON{
+            }
+        }
         
 //        let user = try? newJSONDecoder().decode(User.self, from: jsonData)
 //        vc.hoten = "Đoàn Nguyễn Hoà Nam"

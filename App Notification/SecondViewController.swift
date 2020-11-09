@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class SecondViewController: UIViewController {
     let containerView: UIView = {

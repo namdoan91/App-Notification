@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 // MARK: - User
 struct User: Codable {
