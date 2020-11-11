@@ -105,6 +105,8 @@ class ViewController: UIViewController {
     }()
     
     let margin:CGFloat = 15
+    var responseArray = [User]()
+    var session:String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubView()
@@ -170,31 +172,45 @@ class ViewController: UIViewController {
     @objc func qmkBt(){
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let qmk = storyboard.instantiateViewController(identifier: "ForgetViewController") as! ForgetViewController
-        
-        
-        
         present(qmk, animated: true, completion: nil)
     }
     
     @objc func btnLogin(){
-
+        
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "SecondViewController") as! SecondViewController
         let url = "https://id.mvpapp.vn/api/v1/system/Login"
-        let par = ["username": "\(dangNhapText)","password": "\(matkhatText)"]
-        DispatchQueue.main.async {
-            Alamofire.Request(url, method: .POST, Parameters: par).responseJSON{
+        let par = ["username": self.dangNhapText.text,
+                   "password": self.matkhatText.text]
+
+        AF.request(url, method: .post,parameters: par as Parameters, encoding: JSONEncoding.default).response{ [self]
+            (response) in
+            switch response.result{
+            case .success(let value):
+                do {
+                    let parsedData = try JSONDecoder().decode(User.self, from: value!)
+                    print(parsedData.sessionKey)
+                    print(parsedData.userData.avatar)
+                    print(parsedData.userData.email)
+                    print(parsedData.userData.name)
+                    print(parsedData.userData.username)
+                    self.responseArray.append(parsedData)
+                    print(self.responseArray)
+                    self.session = parsedData.sessionKey
+//                    print(session)
+                    self.present(vc, animated: true, completion: nil)
+                    vc.session2(session: "\(session)")
+                }catch {
+                    print("Error parsed: \(error)")
+                }
+            case .failure(let err):
+                print("Error response: \(err)")
             }
         }
-        
-//        let user = try? newJSONDecoder().decode(User.self, from: jsonData)
-//        vc.hoten = "Đoàn Nguyễn Hoà Nam"
-//        vc.msnv = 6006
-        
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+//    vc.session2(session: "SESSION")
+        
+
     }
-
-
 }
 

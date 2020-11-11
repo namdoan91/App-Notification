@@ -45,13 +45,49 @@
                     <view key="view" contentMode="scaleToFill" id="Cd0-on-f2D">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2L4-a9-yxb" customClass="CustomCell" customModule="App_Notification" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hfi-QU-hMq">
+                                        <rect key="frame" x="20" y="8" width="374" height="44"/>
+                                        <items>
+                                            <navigationItem title="Title" id="SMA-jA-c6b"/>
+                                        </items>
+                                    </navigationBar>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b8l-S5-UET">
+                                        <rect key="frame" x="20" y="52" width="374" height="758"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="hfi-QU-hMq" firstAttribute="leading" secondItem="2L4-a9-yxb" secondAttribute="leading" constant="20" id="7ta-6d-EjP"/>
+                                    <constraint firstItem="b8l-S5-UET" firstAttribute="top" secondItem="hfi-QU-hMq" secondAttribute="bottom" id="Mst-aQ-omy"/>
+                                    <constraint firstAttribute="trailing" secondItem="hfi-QU-hMq" secondAttribute="trailing" constant="20" id="UGs-Db-R9a"/>
+                                    <constraint firstItem="b8l-S5-UET" firstAttribute="leading" secondItem="2L4-a9-yxb" secondAttribute="leading" constant="20" symbolic="YES" id="Umf-Ev-4IS"/>
+                                    <constraint firstAttribute="bottom" secondItem="b8l-S5-UET" secondAttribute="bottom" constant="8" id="gE6-WN-b78"/>
+                                    <constraint firstAttribute="trailing" secondItem="b8l-S5-UET" secondAttribute="trailing" constant="20" symbolic="YES" id="r0A-ks-z78"/>
+                                    <constraint firstItem="hfi-QU-hMq" firstAttribute="top" secondItem="2L4-a9-yxb" secondAttribute="top" constant="8" id="yy7-C8-ILB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Ib-JE-dBS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2L4-a9-yxb" firstAttribute="top" secondItem="6Ib-JE-dBS" secondAttribute="top" id="7ha-6v-MYC"/>
+                            <constraint firstItem="6Ib-JE-dBS" firstAttribute="bottom" secondItem="2L4-a9-yxb" secondAttribute="bottom" id="B8f-lQ-HOD"/>
+                            <constraint firstItem="6Ib-JE-dBS" firstAttribute="trailing" secondItem="2L4-a9-yxb" secondAttribute="trailing" id="NXj-Cp-8uK"/>
+                            <constraint firstItem="2L4-a9-yxb" firstAttribute="leading" secondItem="6Ib-JE-dBS" secondAttribute="leading" id="fNc-B0-N1Z"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="b8l-S5-UET" id="BNp-nc-uAI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JuG-wl-pSF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="719" y="-117"/>
+            <point key="canvasLocation" x="718.84057971014499" y="-117.1875"/>
         </scene>
     </scenes>
     <resources>
