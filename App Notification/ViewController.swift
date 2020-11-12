@@ -105,8 +105,11 @@ class ViewController: UIViewController {
     }()
     
     let margin:CGFloat = 15
-    var responseArray = [User]()
+//    var responseArray = [User]()
     var session:String = ""
+    var avatarView: String = ""
+    var tenNv: String = ""
+    var msNV:String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubView()
@@ -189,28 +192,32 @@ class ViewController: UIViewController {
             case .success(let value):
                 do {
                     let parsedData = try JSONDecoder().decode(User.self, from: value!)
-                    print(parsedData.sessionKey)
-                    print(parsedData.userData.avatar)
-                    print(parsedData.userData.email)
-                    print(parsedData.userData.name)
-                    print(parsedData.userData.username)
-                    self.responseArray.append(parsedData)
-                    print(self.responseArray)
+//                    print(parsedData.sessionKey)
+//                    print(parsedData.userData.avatar)
+//                    print(parsedData.userData.email)
+//                    print(parsedData.userData.name)
+//                    print(parsedData.userData.username)
+
                     self.session = parsedData.sessionKey
-//                    print(session)
+                    self.avatarView = String(parsedData.userData.avatar)
+                    self.msNV = String(Int(parsedData.userData.empID))
+                    self.tenNv = parsedData.userData.name
+                    vc.initData(session: String("\(session)"))
+                    vc.initDataImage(avatarView: String("\(avatarView)"))
+                    vc.initMsnv(msNV: String("\(msNV)"))
+                    vc.initTenNV(tenNv: String("\(tenNv)"))
                     self.present(vc, animated: true, completion: nil)
-                    vc.session2(session: "\(session)")
                 }catch {
-                    print("Error parsed: \(error)")
+//                    print("Error parsed: \(error)")
+                    let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
             case .failure(let err):
                 print("Error response: \(err)")
             }
         }
         vc.modalPresentationStyle = .fullScreen
-//    vc.session2(session: "SESSION")
-        
-
     }
 }
 
