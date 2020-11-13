@@ -183,8 +183,11 @@ class ViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "SecondViewController") as! SecondViewController
         let url = "https://id.mvpapp.vn/api/v1/system/Login"
-        let par = ["username": self.dangNhapText.text,
-                   "password": self.matkhatText.text]
+//        let par = ["username": self.dangNhapText.text,
+//                   "password": self.matkhatText.text]
+//
+        let par = ["username": "6006",
+                   "password": "170917"]
 
         AF.request(url, method: .post,parameters: par as Parameters, encoding: JSONEncoding.default).response{ [self]
             (response) in
@@ -218,6 +221,7 @@ class ViewController: UIViewController {
             }
         }
         vc.modalPresentationStyle = .fullScreen
+        
     }
 }
 

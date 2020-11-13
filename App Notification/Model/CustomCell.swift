@@ -13,11 +13,12 @@ class CustomCell: UITableViewCell {
   
     @IBOutlet weak var contentText: UILabel!
 
-    @IBOutlet weak var emailText: UILabel!
+    @IBOutlet weak var linkText: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
        
-//       avatarImage.layer.cornerRadius = avatarImage.frame.height/2
+        
+
 
     }
 

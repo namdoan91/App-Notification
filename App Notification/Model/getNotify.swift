@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 struct GetNotify: Codable {
     let code: String
@@ -41,3 +42,4 @@ struct Notification: Codable {
         case createdAtFormat = "created_at_format"
     }
 }
+
