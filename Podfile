@@ -8,6 +8,6 @@ target 'App Notification' do
   # Pods for App Notification
    pod 'Alamofire'
    pod 'SwiftyJSON'
-   pod 'AlamofireImage'
+   pod 'Kingfisher/SwiftUI'	
 		
 end

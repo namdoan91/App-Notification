@@ -18,8 +18,8 @@
 		081CABC925550A0100A968B8 /* Extension+UIimage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081CABC825550A0100A968B8 /* Extension+UIimage.swift */; };
 		08AAE87C2558C9E000C356BE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AAE87B2558C9E000C356BE /* User.swift */; };
 		08ADE6D125554C3900E88157 /* ForgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ADE6CF25554C3900E88157 /* ForgetViewController.swift */; };
-		08B24F12255A303E00754E47 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B24F11255A303E00754E47 /* SecondViewController.swift */; };
 		08B24F1F255A4E3E00754E47 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B24F1D255A4E3E00754E47 /* CustomCell.swift */; };
+		08FF3352256200AD0041EAE6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FF3351256200AD0041EAE6 /* HomeViewController.swift */; };
 		1906847506188B60324C94D4 /* Pods_App_Notification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09641EA4F5FE40886854A50 /* Pods_App_Notification.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,8 +37,8 @@
 		081CABC825550A0100A968B8 /* Extension+UIimage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIimage.swift"; sourceTree = "<group>"; };
 		08AAE87B2558C9E000C356BE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		08ADE6CF25554C3900E88157 /* ForgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetViewController.swift; sourceTree = "<group>"; };
-		08B24F11255A303E00754E47 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SecondViewController.swift; path = ../../../../.Trash/SecondViewController.swift; sourceTree = "<group>"; };
 		08B24F1D255A4E3E00754E47 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		08FF3351256200AD0041EAE6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		658F7826F135D9F36BDA1199 /* Pods-App Notification.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App Notification.release.xcconfig"; path = "Target Support Files/Pods-App Notification/Pods-App Notification.release.xcconfig"; sourceTree = "<group>"; };
 		DCEE8A296EE3E78598B15F5B /* Pods-App Notification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App Notification.debug.xcconfig"; path = "Target Support Files/Pods-App Notification/Pods-App Notification.debug.xcconfig"; sourceTree = "<group>"; };
 		E09641EA4F5FE40886854A50 /* Pods_App_Notification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Notification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0805CC7E25623C490013F99D /* MainController */ = {
+			isa = PBXGroup;
+			children = (
+				081CABB12554E4AA00A968B8 /* ViewController.swift */,
+			);
+			path = MainController;
+			sourceTree = "<group>";
+		};
 		081CABA12554E4AA00A968B8 = {
 			isa = PBXGroup;
 			children = (
@@ -77,12 +85,12 @@
 		081CABAC2554E4AA00A968B8 /* App Notification */ = {
 			isa = PBXGroup;
 			children = (
+				0805CC7E25623C490013F99D /* MainController */,
+				08FF33462561FF4C0041EAE6 /* View */,
+				08FF33442561FF400041EAE6 /* Pages */,
 				081CABC52554E4C500A968B8 /* Model */,
 				081CABAD2554E4AA00A968B8 /* AppDelegate.swift */,
 				081CABAF2554E4AA00A968B8 /* SceneDelegate.swift */,
-				08B24F11255A303E00754E47 /* SecondViewController.swift */,
-				081CABB12554E4AA00A968B8 /* ViewController.swift */,
-				08ADE6CF25554C3900E88157 /* ForgetViewController.swift */,
 				081CABB32554E4AA00A968B8 /* Main.storyboard */,
 				081CABB62554E4AB00A968B8 /* Assets.xcassets */,
 				081CABB82554E4AB00A968B8 /* LaunchScreen.storyboard */,
@@ -96,11 +104,27 @@
 			children = (
 				081CABC825550A0100A968B8 /* Extension+UIimage.swift */,
 				08AAE87B2558C9E000C356BE /* User.swift */,
-				08B24F1D255A4E3E00754E47 /* CustomCell.swift */,
-				080C85C4255E656700A0E732 /* CustomCell.xib */,
 				080C85C0255E5EDA00A0E732 /* getNotify.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		08FF33442561FF400041EAE6 /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				08FF3351256200AD0041EAE6 /* HomeViewController.swift */,
+				08ADE6CF25554C3900E88157 /* ForgetViewController.swift */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		08FF33462561FF4C0041EAE6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				08B24F1D255A4E3E00754E47 /* CustomCell.swift */,
+				080C85C4255E656700A0E732 /* CustomCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		99AECBD125E15F42DA7BEBC5 /* Pods */ = {
@@ -236,7 +260,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				081CABB22554E4AA00A968B8 /* ViewController.swift in Sources */,
-				08B24F12255A303E00754E47 /* SecondViewController.swift in Sources */,
 				081CABC925550A0100A968B8 /* Extension+UIimage.swift in Sources */,
 				08B24F1F255A4E3E00754E47 /* CustomCell.swift in Sources */,
 				08AAE87C2558C9E000C356BE /* User.swift in Sources */,
@@ -244,6 +267,7 @@
 				081CABAE2554E4AA00A968B8 /* AppDelegate.swift in Sources */,
 				081CABB02554E4AA00A968B8 /* SceneDelegate.swift in Sources */,
 				080C85C1255E5EDA00A0E732 /* getNotify.swift in Sources */,
+				08FF3352256200AD0041EAE6 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

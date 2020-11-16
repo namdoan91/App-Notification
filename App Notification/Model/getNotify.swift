@@ -7,39 +7,41 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
-struct GetNotify: Codable {
-    let code: String
-    let notification: [Notification]
+class GetNotify{
+    var CODE: String?
+    var notification: [Notification]?
 
-    enum CodingKeys: String, CodingKey {
-        case code = "CODE"
-        case notification = "notification"
+    required public init? (json: JSON){
+        CODE = json["CODE"].stringValue
+        notification = json["notification"].map{Notification(json: JSON($0))!}
     }
 }
 
 // MARK: - Notification
-struct Notification: Codable {
-    let id: Int
-    let empID: Int
-    let title: String
-    let content: String
-    let link: String
-    let isSeen: Int
-    let createdAt: String
-    let updatedAt: String
-    let createdAtFormat: String
-
-    enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case empID = "emp_id"
-        case title = "title"
-        case content = "content"
-        case link = "link"
-        case isSeen = "is_seen"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-        case createdAtFormat = "created_at_format"
+class Notification{
+    var id: String?
+    var emp_id: Int?
+    var title: String?
+    var content: String?
+    var link: String?
+    var is_seen: Int?
+    var created_at: String?
+    var updated_at: String?
+    var created_at_format: String?
+    required public init? (json: JSON){
+        id = json["id"].stringValue
+        emp_id = json["emp_id"].intValue
+        title = json["title"].stringValue
+        content = json["content"].stringValue
+        link = json["link"].stringValue
+        is_seen = json["is_seen"].intValue
+        created_at = json["created_at"].stringValue
+        updated_at = json["updated_at"].stringValue
+        created_at_format = json["created_at_format"].stringValue
+        
     }
+    
 }
 
