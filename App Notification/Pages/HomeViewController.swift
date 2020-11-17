@@ -21,7 +21,8 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
     var content = [String]()
     var id = ""
     var link = [String]()
-    var title1 = ""
+    var title = ""
+    var created_at = [String]()
     
     let margin:CGFloat = 20
 
@@ -74,7 +75,7 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
+        tableView.register(CustomCell.self, forCellReuseIdentifier: "CustomCell")
         loadData()
         addSub()
         setLayout()
@@ -97,7 +98,6 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         topView.addSubview(avatarImage)
         topView.addSubview(msnvText)
         topView.addSubview(tenUserLabel)
-        
     }
     func setLayout(){
         containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
@@ -132,7 +132,6 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
     }
     func initData(session: String){
         self.session1 = session
-       
     }
     func loadData(){
         let urlNoty = "https://id.mvpapp.vn/api/v1/mvpnotify/getNotify"
@@ -151,9 +150,8 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
                     print(strongSelf.id)
                     strongSelf.link.append(item["link"].stringValue)
                     print(strongSelf.link)
-                    
-                    
-                    
+                    strongSelf.title.append(item["title"].stringValue)
+                    strongSelf.created_at.append(item["created_at"].stringValue)
                     strongSelf.tableView.reloadData()
                 }
                 case .failure(let err):
@@ -179,14 +177,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
-        cell.contentText.text = content[indexPath.row]
-//        cell.linkText.text = link[indexPath.row]
+        cell.contentLabel.text = content[indexPath.row]
+        cell.titleNewLabel.text = title[indexPath.row]
         
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-//        return UITableView.automaticDimension
+
+        return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow

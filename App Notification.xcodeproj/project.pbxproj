@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		080C85C1255E5EDA00A0E732 /* getNotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080C85C0255E5EDA00A0E732 /* getNotify.swift */; };
-		080C85C5255E656700A0E732 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 080C85C4255E656700A0E732 /* CustomCell.xib */; };
 		081CABAE2554E4AA00A968B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081CABAD2554E4AA00A968B8 /* AppDelegate.swift */; };
 		081CABB02554E4AA00A968B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081CABAF2554E4AA00A968B8 /* SceneDelegate.swift */; };
 		081CABB22554E4AA00A968B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081CABB12554E4AA00A968B8 /* ViewController.swift */; };
@@ -25,7 +24,6 @@
 
 /* Begin PBXFileReference section */
 		080C85C0255E5EDA00A0E732 /* getNotify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = getNotify.swift; sourceTree = "<group>"; };
-		080C85C4255E656700A0E732 /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		081CABAA2554E4AA00A968B8 /* App Notification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App Notification.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		081CABAD2554E4AA00A968B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		081CABAF2554E4AA00A968B8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				08B24F1D255A4E3E00754E47 /* CustomCell.swift */,
-				080C85C4255E656700A0E732 /* CustomCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -205,7 +202,6 @@
 			files = (
 				081CABBA2554E4AB00A968B8 /* LaunchScreen.storyboard in Resources */,
 				081CABB72554E4AB00A968B8 /* Assets.xcassets in Resources */,
-				080C85C5255E656700A0E732 /* CustomCell.xib in Resources */,
 				081CABB52554E4AA00A968B8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
