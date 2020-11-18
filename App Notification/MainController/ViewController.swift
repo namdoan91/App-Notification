@@ -108,7 +108,7 @@ class ViewController: UIViewController {
         welcome.layer.shadowOffset = CGSize(width: 20, height: 20)
         return welcome
     }()
-    
+    var indicator = UIActivityIndicatorView()
     let margin:CGFloat = 15
     var session = ""
     var avatarView = ""
@@ -121,7 +121,6 @@ class ViewController: UIViewController {
         setLayout()
         dangNhapbtnLogin.addTarget(self, action: #selector(btnLogin), for: .touchUpInside)
         qmkButton.addTarget(self, action: #selector(qmkBt), for: .touchUpInside)
-        
     }
 
     func addSubView(){
@@ -182,32 +181,34 @@ class ViewController: UIViewController {
         let qmk = storyboard.instantiateViewController(identifier: "ForgetViewController") as! ForgetViewController
         present(qmk, animated: true, completion: nil)
     }
-//    func login() throws {
-//        let username =  dangNhapText.text!
-//        let password = matkhatText.text!
-//
-//        if username.isEmpty || password.isEmpty {
-//            throw loginError.incompleteForm
-//        }
-////        if !username.invalidEmail {
-////            throw loginError.invalidEmail
-////        }
-//        if password.count < 5 {
-//            throw loginError.incorrectPasswordLength
-//        }
-//    }
     @objc func btnLogin(){
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
         let url = "https://id.mvpapp.vn/api/v1/system/Login"
                 let par = ["username": dangNhapText.text!,
                            "password": matkhatText.text!]
-//        do{
+        //        let par = ["username": "6006",
+        //                   "password": "170917"]
         AF.request(url, method: .post,parameters: par,encoding: JSONEncoding.default).responseJSON{ [self]
                 response in
                 switch response.result {
                 case .success(let value):
                         let json = JSON(value)
+                    if json["CODE"].stringValue ==  "PARAMS_NULL"{
+                        print(self.indicator)
+                        let alert = UIAlertController(title: "Thông Báo", message: "Tài Khoản Hoặc Mật Khẩu Chưa Nhập", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    if json["CODE"].stringValue == "LOGIN_FAILED"{
+                        self.indicator.stopAnimating()
+                        let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    if json["CODE"].stringValue == "SUCCESS"{
+                        print(self.indicator)
                         print(json["session_key"].stringValue)
                         self.session = json["session_key"].stringValue
                         print(self.session)
@@ -223,33 +224,13 @@ class ViewController: UIViewController {
                         vc.initTenNV(tenNv: tenNv)
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true, completion: .none)
-//                }else do {
-//                        let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
-//                        alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
-//                        self.present(alert, animated: true, completion: nil)
-//                    }
-
+                    }
                 case .failure(let err):
                     print(err.localizedDescription)
-                    let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
                     break
                 }
             }
-//            try login()
-//        } catch loginError.incompleteForm {
-//            Alert.showBasic(title: "Không Hoàn Thành", message: "Không Để Trống MSNV và Mật Khẩu", vc: self)
-////        } catch loginError.invalidEmail {
-////            Alert.showBasic(title: "Invalid Email Format", message: "Please make sure you format your email correctly", vc: self)
-//        } catch loginError.incorrectPasswordLength {
-//            Alert.showBasic(title: "Mật Khẩu Quá Ngắn", message: "Vui Lòng Nhập Mật Khẩu dài hơn 5 kí tự", vc: self)
-//        }
-//        catch {
-//            Alert.showBasic(title: "Unable To Login", message: "Đăng Nhập Thất bại", vc: self)
-//        }
-//        let par = ["username": "6006",
-//                   "password": "170917"]
+
 
     }
 
