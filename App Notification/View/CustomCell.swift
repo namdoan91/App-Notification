@@ -52,6 +52,7 @@ class CustomCell: UITableViewCell {
         containerView.backgroundColor = UIColor(red:0.906, green:0.910, blue:0.918, alpha: 1.000)
         
     }
+    
     func addSub(){
         self.addSubview(containerView)
         containerView.addSubview(titleNewLabel)
@@ -71,9 +72,9 @@ class CustomCell: UITableViewCell {
         titleNewLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.45, constant: 0).isActive = true
         titleNewLabel.heightAnchor.constraint(equalTo:self.heightAnchor,multiplier: 0.3, constant: 0).isActive = true
         
-        contentLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -35).isActive  = true
+        contentLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -25).isActive  = true
         contentLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
-        contentLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.45, constant: 0).isActive = true
+        contentLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.6, constant: 0).isActive = true
         contentLabel.heightAnchor.constraint(equalTo: self.heightAnchor,multiplier: 0.4, constant: 0).isActive = true
         
         timerLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant: -5).isActive  = true

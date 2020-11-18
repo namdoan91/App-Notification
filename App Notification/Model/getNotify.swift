@@ -23,7 +23,7 @@ class GetNotify{
 class Notification{
     var id: String?
     var emp_id: Int?
-    var title: String
+    var title: String?
     var content: String?
     var link: String?
     var is_seen: Int?
@@ -40,8 +40,6 @@ class Notification{
         created_at = json["created_at"].stringValue
         updated_at = json["updated_at"].stringValue
         created_at_format = json["created_at_format"].stringValue
-        
     }
-    
 }
 

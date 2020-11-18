@@ -9,5 +9,5 @@ target 'App Notification' do
    pod 'Alamofire'
    pod 'SwiftyJSON'
    pod 'Kingfisher/SwiftUI'	
-		
+   pod "TKFormTextField"		
 end

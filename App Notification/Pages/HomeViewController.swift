@@ -21,7 +21,7 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
     var content = [String]()
     var id = ""
     var link = [String]()
-    var title = ""
+    var tieuDe = [String]()
     var created_at = [String]()
     
     let margin:CGFloat = 20
@@ -70,11 +70,18 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         msnvLable.textAlignment = .right
         return msnvLable
     }()
-    
+    let logoutBtn: UIButton = {
+        let logout = UIButton()
+        logout.translatesAutoresizingMaskIntoConstraints = false
+        logout.setTitle("Đăng Xuất", for: .normal)
+        logout.setTitleColor(UIColor.blue, for: .normal)
+        return logout
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.reloadData()
         tableView.register(CustomCell.self, forCellReuseIdentifier: "CustomCell")
         loadData()
         addSub()
@@ -84,12 +91,8 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         avatarImage.layer.cornerRadius = 25
         msnvText.text = "MSNV: \(msnv)"
         tenUserLabel.text = tenUser
-        //            print(ava)
-//        self.tenNhanVienText.text = "\(tenUser)"
-        //            print(tenNhanVienText)
-//        self.msnvText.text = "\(msnv)"
-        //            print(msnv)
         
+        logoutBtn.addTarget(self, action: #selector(dangLogout), for: .touchUpInside)
     }
     func addSub(){
         view.addSubview(containerView)
@@ -98,6 +101,7 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         topView.addSubview(avatarImage)
         topView.addSubview(msnvText)
         topView.addSubview(tenUserLabel)
+        topView.addSubview(logoutBtn)
     }
     func setLayout(){
         containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
@@ -120,6 +124,11 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         msnvText.widthAnchor.constraint(equalToConstant: 90).isActive = true
         msnvText.heightAnchor.constraint(equalToConstant: 10).isActive = true
         
+        logoutBtn.topAnchor.constraint(equalTo: topView.topAnchor, constant: 0).isActive = true
+        logoutBtn.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 10).isActive = true
+        logoutBtn.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: 0).isActive = true
+        logoutBtn.widthAnchor.constraint(equalTo: logoutBtn.widthAnchor).isActive = true
+        
         tenUserLabel.bottomAnchor.constraint(equalTo: topView.bottomAnchor, constant: -15).isActive = true
         tenUserLabel.trailingAnchor.constraint(equalTo: avatarImage.trailingAnchor,constant: -55).isActive = true
         tenUserLabel.widthAnchor.constraint(equalToConstant: 180).isActive = true
@@ -133,6 +142,19 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
     func initData(session: String){
         self.session1 = session
     }
+    @objc func dangLogout(){
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func convertToString (dateString: String, formatIn : String, formatOut : String) -> String {
+        let dateFormater = DateFormatter()
+        dateFormater.timeZone = TimeZone(identifier: "GMT")
+        dateFormater.dateFormat = formatIn
+        let date = dateFormater.date(from: dateString)
+        dateFormater.dateFormat = formatOut
+        let timeStr = dateFormater.string(from: date!)
+        return timeStr
+     }
     func loadData(){
         let urlNoty = "https://id.mvpapp.vn/api/v1/mvpnotify/getNotify"
         let para = ["session_key" : session1]
@@ -150,7 +172,7 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
                     print(strongSelf.id)
                     strongSelf.link.append(item["link"].stringValue)
                     print(strongSelf.link)
-                    strongSelf.title.append(item["title"].stringValue)
+                    strongSelf.tieuDe.append(item["title"].stringValue)
                     strongSelf.created_at.append(item["created_at"].stringValue)
                     strongSelf.tableView.reloadData()
                 }
@@ -178,8 +200,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
         cell.contentLabel.text = content[indexPath.row]
-        cell.titleNewLabel.text = title[indexPath.row]
+        cell.titleNewLabel.text = tieuDe[indexPath.row]
+//        cell.timerLabel.text = created_at[indexPath.row]
+        let updateDate = convertToString(dateString: "\(created_at[indexPath.row])", formatIn: "yyyy-MM-dd hh:mm:ss", formatOut: "dd-MM-yyyy HH:mm")
+        cell.timerLabel.text = updateDate
         
+
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
