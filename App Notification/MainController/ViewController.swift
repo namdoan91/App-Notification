@@ -8,11 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-enum loginError: Error {
-    case incompleteForm
-    case invalidEmail
-    case incorrectPasswordLength
-}
+import JGProgressHUD
 class ViewController: UIViewController {
     
     let containerView: UIView = {
@@ -21,7 +17,6 @@ class ViewController: UIViewController {
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
-    
     let setView: UIView = {
         let setView = UIView()
         setView.backgroundColor = UIColor(red:0.980, green:0.980, blue:0.980, alpha: 1.000)
@@ -31,21 +26,18 @@ class ViewController: UIViewController {
         setView.layer.shadowOffset = CGSize(width: 5, height: 5)
         return setView
     }()
-    
     let welcome: UILabel = {
         let welcome = UILabel()
         welcome.translatesAutoresizingMaskIntoConstraints = false
         welcome.text = "WELCOME BACK APP NOTIFICATION"
         welcome.textAlignment = .center
         welcome.textColor = UIColor(red:0.518, green:0.604, blue:1.000, alpha: 1.000)
-//        welcome.backgroundColor = UIColor.red
         welcome.font = UIFont.boldSystemFont(ofSize: 34)
         welcome.numberOfLines = 0
         welcome.layer.shadowColor = UIColor.black.cgColor
         welcome.layer.shadowOffset = CGSize(width: 20, height: 20)
         return welcome
     }()
-
     let dangNhapText: UITextField = {
         let dangnhap = UITextField()
         dangnhap.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +63,6 @@ class ViewController: UIViewController {
         matKhau.textAlignment = .center
         return matKhau
     }()
-    
     let dangNhapbtnLogin: UIButton = {
         let dangnhap = UIButton()
         dangnhap.translatesAutoresizingMaskIntoConstraints = false
@@ -83,7 +74,6 @@ class ViewController: UIViewController {
         
         return dangnhap
     } ()
-    
     let qmkButton: UIButton = {
         let dangnhap = UIButton()
         dangnhap.translatesAutoresizingMaskIntoConstraints = false
@@ -94,7 +84,6 @@ class ViewController: UIViewController {
         dangnhap.layer.cornerRadius = 40
         return dangnhap
     } ()
-    
     let version: UILabel = {
         let welcome = UILabel()
         welcome.translatesAutoresizingMaskIntoConstraints = false
@@ -108,13 +97,11 @@ class ViewController: UIViewController {
         welcome.layer.shadowOffset = CGSize(width: 20, height: 20)
         return welcome
     }()
-    var indicator = UIActivityIndicatorView()
     let margin:CGFloat = 15
     var session = ""
     var avatarView = ""
     var tenNv = ""
     var msNV = ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubView()
@@ -122,7 +109,6 @@ class ViewController: UIViewController {
         dangNhapbtnLogin.addTarget(self, action: #selector(btnLogin), for: .touchUpInside)
         qmkButton.addTarget(self, action: #selector(qmkBt), for: .touchUpInside)
     }
-
     func addSubView(){
         view.addSubview(containerView)
         containerView.addSubview(setView)
@@ -182,33 +168,33 @@ class ViewController: UIViewController {
         present(qmk, animated: true, completion: nil)
     }
     @objc func btnLogin(){
+        let hud = JGProgressHUD()
+        hud.textLabel.text = "Loading"
+        if (dangNhapText.text! == "" || matkhatText.text! == ""){
+            hud.dismiss(afterDelay: 0.0)
+            let alert = UIAlertController(title: "Thông Báo", message: "Vui Lòng Điền Thông Tin", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return;
+        }
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
         let url = "https://id.mvpapp.vn/api/v1/system/Login"
                 let par = ["username": dangNhapText.text!,
                            "password": matkhatText.text!]
-        //        let par = ["username": "6006",
-        //                   "password": "170917"]
-        AF.request(url, method: .post,parameters: par,encoding: JSONEncoding.default).responseJSON{ [self]
+        AF.request(url, method: .post,parameters: par,encoding: JSONEncoding.default).validate(statusCode: 200..<300).responseJSON{ [self]
                 response in
                 switch response.result {
                 case .success(let value):
                         let json = JSON(value)
-                    if json["CODE"].stringValue ==  "PARAMS_NULL"{
-                        print(self.indicator)
-                        let alert = UIAlertController(title: "Thông Báo", message: "Tài Khoản Hoặc Mật Khẩu Chưa Nhập", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                        
-                    }
                     if json["CODE"].stringValue == "LOGIN_FAILED"{
-                        self.indicator.stopAnimating()
-                        let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
+                       hud.dismiss(afterDelay: 0.0)
+                        let alert = UIAlertController(title: "Thông Báo", message: "Tài Khoản Hoặc Mật Khẩu Không Đúng", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
+                        return;
                     }
                     if json["CODE"].stringValue == "SUCCESS"{
-                        print(self.indicator)
                         print(json["session_key"].stringValue)
                         self.session = json["session_key"].stringValue
                         print(self.session)
@@ -230,8 +216,5 @@ class ViewController: UIViewController {
                     break
                 }
             }
-
-
     }
-
 }

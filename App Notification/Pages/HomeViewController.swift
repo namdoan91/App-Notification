@@ -178,8 +178,8 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
                 }
                 case .failure(let err):
                     print(err.localizedDescription)
-                let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
+//                let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
+//                alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
             }
         }
     }
@@ -216,10 +216,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         let indexPath = tableView.indexPathForSelectedRow
         let urls = link[(indexPath?.row)!]
         if let urlLink = URL(string: urls){
-            let vc = SFSafariViewController(url: urlLink,entersReaderIfAvailable: true)
-            vc.delegate = self
-            present(vc, animated: true) {
+            if #available(iOS 11.0, *){
+                let vc = SFSafariViewController(url: urlLink)
+                vc.delegate = self
+                present(vc, animated: true)
+            }else{
+                let vc = SFSafariViewController(url: urlLink,entersReaderIfAvailable: true)
+                vc.delegate = self
+                present(vc, animated: true)
             }
+            
         }
     }
 }

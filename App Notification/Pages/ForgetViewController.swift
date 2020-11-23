@@ -8,14 +8,12 @@
 import UIKit
 
 class ForgetViewController: UIViewController {
-
     let containerView: UIView = {
         let container = UIView()
         container.backgroundColor = UIColor(red:0.898, green:0.898, blue:0.898, alpha: 1.000)
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
-    
     let setView: UIView = {
         let setView = UIView()
         setView.backgroundColor = UIColor(red:0.980, green:0.980, blue:0.980, alpha: 1.000)
@@ -25,7 +23,6 @@ class ForgetViewController: UIViewController {
         setView.layer.shadowOffset = CGSize(width: 5, height: 5)
         return setView
     }()
-    
     let backGoHome: UIButton = {
         let back = UIButton()
         back.translatesAutoresizingMaskIntoConstraints = false
@@ -40,18 +37,13 @@ class ForgetViewController: UIViewController {
         super.viewDidLoad()
         addSubView()
         setLayOut()
-        
         backGoHome.addTarget(self, action: #selector(backHome), for: .touchUpInside)
-
-   
     }
-    
     func addSubView() {
         view.addSubview(containerView)
         containerView.addSubview(setView)
         containerView.addSubview(backGoHome)
     }
-    
     func setLayOut(){
         containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
@@ -67,13 +59,9 @@ class ForgetViewController: UIViewController {
         setView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: margin).isActive = true
         setView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -margin).isActive = true
         setView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-    
     }
-    
     @objc func backHome(){
         dismiss(animated: true, completion: nil)
     }
-
-
 }
 

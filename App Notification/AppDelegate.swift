@@ -6,15 +6,54 @@
 //
 
 import UIKit
+import UserNotifications
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) {(granted, error) in
+                // Make sure permission to receive push notifications is granted
+                print("Permission is granted: \(granted)")
+        }
+        UNUserNotificationCenter.current().delegate = self
         return true
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("Push notification received in foreground.")
+        completionHandler([.sound, .badge])
+    }
+    func getNotificationSettings() {
+      UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+        print("Notification settings: (settings)")
+        guard settings.authorizationStatus == .authorized else { return }
+            UIApplication.shared.registerForRemoteNotifications()
+      }
+    }
+    func registerForPushNotifications() {
+      UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+        (granted, error) in
+        print("Permission granted: (granted)")
+
+        guard granted else { return }
+        self.getNotificationSettings()
+      }
+    }
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+      let tokenParts = deviceToken.map { data -> String in
+        return String(format: "%02.2hhx", data)
+      }
+        let token = tokenParts.joined()
+      print("Device Token: \(token)")
+    }
+
+    func application(_ application: UIApplication,
+                     didFailToRegisterForRemoteNotificationsWithError error: Error) {
+      print("Failed to register: (error)")
     }
 
     // MARK: UISceneSession Lifecycle
