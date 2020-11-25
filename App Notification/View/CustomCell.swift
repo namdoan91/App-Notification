@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import SVGKit
 
 class CustomCell: UITableViewCell {
     let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
-        view.layer.cornerRadius = 30
+        view.layer.cornerRadius = 40
         return view
     }()
     let titleNewLabel: UILabel = {
@@ -40,6 +41,15 @@ class CustomCell: UITableViewCell {
         titleNewLabel.textAlignment = .right
         return titleNewLabel
     }()
+    let avatarTitle: UIImageView = {
+        let avatarTitle = UIImageView()
+        avatarTitle.translatesAutoresizingMaskIntoConstraints = false
+        avatarTitle.image = UIImage(named: "") ?? UIImage()
+        avatarTitle.layer.cornerRadius = avatarTitle.frame.height/2
+        avatarTitle.contentMode = .scaleAspectFit
+//        avatarTitle.backgroundColor = UIColor.red
+        return avatarTitle
+    }()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,7 +59,9 @@ class CustomCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         addSub()
         setLayout()
-        containerView.backgroundColor = UIColor(red:0.906, green:0.910, blue:0.918, alpha: 1.000)
+//        containerView.backgroundColor = UIColor(red:0.906, green:0.910, blue:0.918, alpha: 1.000)
+        containerView.backgroundColor = UIColor.white
+
         
     }
     
@@ -59,6 +71,7 @@ class CustomCell: UITableViewCell {
         containerView.addSubview(contentLabel)
         containerView.addSubview(timerLabel)
         containerView.addSubview(titleNewLabel)
+        containerView.addSubview(avatarTitle)
         
     }
     func setLayout(){
@@ -67,7 +80,7 @@ class CustomCell: UITableViewCell {
         containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5).isActive = true
         containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -3).isActive = true
         
-        titleNewLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+        titleNewLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5).isActive = true
         titleNewLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5).isActive = true
         titleNewLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.45, constant: 0).isActive = true
         titleNewLabel.heightAnchor.constraint(equalTo:self.heightAnchor,multiplier: 0.3, constant: 0).isActive = true
@@ -81,5 +94,14 @@ class CustomCell: UITableViewCell {
         timerLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
         timerLabel.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.45, constant: 0).isActive = true
         timerLabel.heightAnchor.constraint(equalTo: self.heightAnchor,multiplier: 0.2, constant: 0).isActive = true
+        
+        avatarTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+//        avatarTitle.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 1,constant: 0).isActive = true
+//        avatarTitle.widthAnchor.constraint(equalToConstant: 50).isActive = true
+//        avatarTitle.heightAnchor.constraint(equalTo: avatarTitle.widthAnchor).isActive = true
+        avatarTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: 5).isActive = true
+        avatarTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5).isActive = true
+     
+        
     }
 }

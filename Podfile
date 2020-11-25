@@ -10,5 +10,6 @@ target 'App Notification' do
    pod 'SwiftyJSON'
    pod 'Kingfisher/SwiftUI'	
    pod 'JGProgressHUD'	
+   pod 'SVGKit'	
    pod 'ProgressHUD'		
 end

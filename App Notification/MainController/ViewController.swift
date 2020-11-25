@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         dangnhap.placeholder = "Mã Số Nhân Viên"
         dangnhap.backgroundColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1.000)
         dangnhap.leftViewMode = .always
-        dangnhap.layer.cornerRadius = 40
+        dangnhap.layer.cornerRadius = 30
         dangnhap.clearButtonMode = .always
         dangnhap.textAlignment = .center
         return dangnhap
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
         matKhau.placeholder = "Mật Khẩu Của Bạn"
         matKhau.backgroundColor = UIColor(red:1.000, green:1.000, blue:1.000, alpha: 1.000)
         matKhau.leftViewMode = .always
-        matKhau.layer.cornerRadius = 40
+        matKhau.layer.cornerRadius = 30
         matKhau.isSecureTextEntry = true
         matKhau.clearButtonMode = .always
         matKhau.textAlignment = .center
@@ -70,7 +70,8 @@ class ViewController: UIViewController {
         dangnhap.setTitle("ĐĂNG NHẬP", for: .normal)
         dangnhap.setTitleColor(UIColor.white, for: .normal)
         dangnhap.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
-        dangnhap.layer.cornerRadius = 40
+        dangnhap.layer.cornerRadius = 30
+        dangnhap.clipsToBounds = true
         
         return dangnhap
     } ()
@@ -81,7 +82,7 @@ class ViewController: UIViewController {
         dangnhap.setTitle("Quên mật khẩu !", for: .normal)
         dangnhap.setTitleColor(UIColor(red:0.518, green:0.604, blue:1.000, alpha: 1.000), for: .normal)
         dangnhap.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        dangnhap.layer.cornerRadius = 40
+//        dangnhap.layer.cornerRadius = 40
         return dangnhap
     } ()
     let version: UILabel = {
@@ -90,12 +91,20 @@ class ViewController: UIViewController {
         welcome.text = "Ver 1.0.0"
         welcome.textAlignment = .center
         welcome.textColor = UIColor(red:0.518, green:0.604, blue:1.000, alpha: 1.000)
-//        welcome.backgroundColor = UIColor.red
-        welcome.font = UIFont.boldSystemFont(ofSize: 15)
+        welcome.font = UIFont.boldSystemFont(ofSize: 17)
         welcome.numberOfLines = 0
         welcome.layer.shadowColor = UIColor.black.cgColor
         welcome.layer.shadowOffset = CGSize(width: 20, height: 20)
         return welcome
+    }()
+    
+    let stackView: UIStackView = {
+        let stackview = UIStackView()
+        stackview.translatesAutoresizingMaskIntoConstraints = false
+//        stackview.backgroundColor = UIColor.gray
+        stackview.distribution = .fillProportionally
+        
+        return stackview
     }()
     let margin:CGFloat = 15
     var session = ""
@@ -107,14 +116,17 @@ class ViewController: UIViewController {
         addSubView()
         setLayout()
         dangNhapbtnLogin.addTarget(self, action: #selector(btnLogin), for: .touchUpInside)
+
+        
         qmkButton.addTarget(self, action: #selector(qmkBt), for: .touchUpInside)
     }
     func addSubView(){
         view.addSubview(containerView)
         containerView.addSubview(setView)
-        containerView.addSubview(dangNhapText)
-        containerView.addSubview(matkhatText)
-        containerView.addSubview(dangNhapbtnLogin)
+        containerView.addSubview(stackView)
+        stackView.addSubview(dangNhapText)
+        stackView.addSubview(matkhatText)
+        stackView.addSubview(dangNhapbtnLogin)
         containerView.addSubview(welcome)
         containerView.addSubview(qmkButton)
         containerView.addSubview(version)
@@ -133,29 +145,34 @@ class ViewController: UIViewController {
         welcome.topAnchor.constraint(equalTo: setView.topAnchor, constant: 120).isActive = true
         welcome.leadingAnchor.constraint(equalTo:setView.leadingAnchor, constant: margin).isActive = true
         welcome.trailingAnchor.constraint(equalTo: setView.trailingAnchor, constant: -margin).isActive = true
-        welcome.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        welcome.heightAnchor.constraint(equalTo: welcome.heightAnchor).isActive = true
         
-        dangNhapText.topAnchor.constraint(equalTo: setView.topAnchor, constant: 260).isActive = true
-        dangNhapText.leadingAnchor.constraint(equalTo:setView.leadingAnchor, constant: margin).isActive = true
-        dangNhapText.trailingAnchor.constraint(equalTo: setView.trailingAnchor, constant: -margin).isActive = true
-        dangNhapText.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: setView.centerXAnchor, constant: 0).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: setView.centerYAnchor, constant: 0).isActive = true
+        stackView.widthAnchor.constraint(equalTo: setView.widthAnchor, constant: 0).isActive = true
+        stackView.heightAnchor.constraint(equalToConstant: 245).isActive = true
+        
+        dangNhapText.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 10).isActive = true
+        dangNhapText.leadingAnchor.constraint(equalTo:stackView.leadingAnchor, constant: margin).isActive = true
+        dangNhapText.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -margin).isActive = true
+        dangNhapText.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         matkhatText.topAnchor.constraint(equalTo: dangNhapText.bottomAnchor, constant: margin).isActive = true
-        matkhatText.leadingAnchor.constraint(equalTo:setView.leadingAnchor, constant: margin).isActive = true
-        matkhatText.trailingAnchor.constraint(equalTo: setView.trailingAnchor, constant: -margin).isActive = true
-        matkhatText.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        matkhatText.leadingAnchor.constraint(equalTo:stackView.leadingAnchor, constant: margin).isActive = true
+        matkhatText.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -margin).isActive = true
+        matkhatText.heightAnchor.constraint(equalTo: dangNhapText.heightAnchor, constant: 0).isActive = true
         
-        dangNhapbtnLogin.topAnchor.constraint(equalTo: matkhatText.bottomAnchor, constant: 80).isActive = true
+        dangNhapbtnLogin.topAnchor.constraint(equalTo: matkhatText.bottomAnchor, constant: 30).isActive = true
         dangNhapbtnLogin.leadingAnchor.constraint(equalTo:setView.leadingAnchor, constant: margin).isActive = true
         dangNhapbtnLogin.trailingAnchor.constraint(equalTo: setView.trailingAnchor, constant: -margin).isActive = true
-        dangNhapbtnLogin.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        dangNhapbtnLogin.heightAnchor.constraint(equalTo: dangNhapText.heightAnchor, constant: 0).isActive = true
         
-        qmkButton.topAnchor.constraint(equalTo: dangNhapbtnLogin.bottomAnchor, constant: 140).isActive = true
-        qmkButton.leadingAnchor.constraint(equalTo:setView.leadingAnchor, constant: margin).isActive = true
-        qmkButton.trailingAnchor.constraint(equalTo: setView.trailingAnchor, constant: -margin).isActive = true
-        qmkButton.bottomAnchor.constraint(equalTo: version.bottomAnchor, constant: -70).isActive = true
+        qmkButton.centerXAnchor.constraint(equalTo: setView.centerXAnchor, constant: 0).isActive = true
+        qmkButton.widthAnchor.constraint(equalTo: qmkButton.widthAnchor, constant: 0).isActive = true
+        qmkButton.heightAnchor.constraint(equalTo: qmkButton.heightAnchor, constant: 0).isActive = true
+        qmkButton.bottomAnchor.constraint(equalTo: version.topAnchor, constant: -10).isActive = true
         
-        version.topAnchor.constraint(equalTo: qmkButton.bottomAnchor, constant: 50).isActive = true
+        version.heightAnchor.constraint(equalTo: version.heightAnchor).isActive = true
         version.leadingAnchor.constraint(equalTo:setView.leadingAnchor, constant: margin).isActive = true
         version.trailingAnchor.constraint(equalTo: setView.trailingAnchor, constant: -margin).isActive = true
         version.bottomAnchor.constraint(equalTo: setView.bottomAnchor, constant: -30).isActive = true
@@ -170,20 +187,23 @@ class ViewController: UIViewController {
     @objc func btnLogin(){
         let hud = JGProgressHUD()
         hud.textLabel.text = "Loading"
-        if (dangNhapText.text! == "" || matkhatText.text! == ""){
-            hud.dismiss(afterDelay: 0.0)
-            let alert = UIAlertController(title: "Thông Báo", message: "Vui Lòng Điền Thông Tin", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            return;
-        }
+//        if (dangNhapText.text! == "" || matkhatText.text! == ""){
+//            hud.dismiss(afterDelay: 0.0)
+//            let alert = UIAlertController(title: "Thông Báo", message: "Vui Lòng Điền Thông Tin", preferredStyle: UIAlertController.Style.alert)
+//            alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            return;
+//        }
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
         let url = "https://id.mvpapp.vn/api/v1/system/Login"
-                let par = ["username": dangNhapText.text!,
-                           "password": matkhatText.text!]
-        AF.request(url, method: .post,parameters: par,encoding: JSONEncoding.default).validate(statusCode: 200..<300).responseJSON{ [self]
+//        let par = ["username": dangNhapText.text!,
+//                   "password": matkhatText.text!]
+        let par = ["username": "6006",
+                   "password": "170917"]
+        AF.request(url, method: .post,parameters: par,encoding: JSONEncoding.default).validate(statusCode: 200..<300).responseJSON{ [weak self]
                 response in
+            guard let strongSelf = self else {return}
                 switch response.result {
                 case .success(let value):
                         let json = JSON(value)
@@ -191,25 +211,20 @@ class ViewController: UIViewController {
                        hud.dismiss(afterDelay: 0.0)
                         let alert = UIAlertController(title: "Thông Báo", message: "Tài Khoản Hoặc Mật Khẩu Không Đúng", preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        strongSelf.present(alert, animated: true, completion: nil)
                         return;
                     }
                     if json["CODE"].stringValue == "SUCCESS"{
-                        print(json["session_key"].stringValue)
-                        self.session = json["session_key"].stringValue
-                        print(self.session)
-                        self.avatarView = json["userData"]["avatar"].stringValue
-                        print(self.avatarView)
-                        self.msNV = json["userData"]["emp_id"].stringValue
-                        print(msNV)
-                        self.tenNv = json["userData"]["name"].stringValue
-                        print(tenNv)
-                        vc.initData(session: session)
-                        vc.initDataImage(avatarView: avatarView)
-                        vc.initMsnv(msNV: msNV)
-                        vc.initTenNV(tenNv: tenNv)
+                        strongSelf.session = json["session_key"].stringValue
+                        strongSelf.avatarView = json["userData"]["avatar"].stringValue
+                        strongSelf.msNV = json["userData"]["emp_id"].stringValue
+                        strongSelf.tenNv = json["userData"]["name"].stringValue
+                        vc.initData(session: strongSelf.session)
+                        vc.initDataImage(avatarView: strongSelf.avatarView)
+                        vc.initMsnv(msNV: strongSelf.msNV)
+                        vc.initTenNV(tenNv: strongSelf.tenNv)
                         vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true, completion: .none)
+                        strongSelf.present(vc, animated: true, completion: .none)
                     }
                 case .failure(let err):
                     print(err.localizedDescription)

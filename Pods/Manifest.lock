@@ -1,10 +1,15 @@
 PODS:
   - Alamofire (5.3.0)
+  - CocoaLumberjack (3.7.0):
+    - CocoaLumberjack/Core (= 3.7.0)
+  - CocoaLumberjack/Core (3.7.0)
   - JGProgressHUD (2.2)
   - Kingfisher/Core (5.15.7)
   - Kingfisher/SwiftUI (5.15.7):
     - Kingfisher/Core
   - ProgressHUD (13.4)
+  - SVGKit (2.1.1):
+    - CocoaLumberjack (~> 3.0)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
@@ -12,23 +17,28 @@ DEPENDENCIES:
   - JGProgressHUD
   - Kingfisher/SwiftUI
   - ProgressHUD
+  - SVGKit
   - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CocoaLumberjack
     - JGProgressHUD
     - Kingfisher
     - ProgressHUD
+    - SVGKit
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
+  CocoaLumberjack: e8955b9d337ac307103b0a34fd141c32f27e53c5
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   Kingfisher: 6e1a13523fcb1c86924ce53affe4ac957e544d59
   ProgressHUD: 137a7fc677487c5581668f4490563124fb35c232
+  SVGKit: 652cdf7bef8bec8564d04a8511d3ab50c7595fac
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: ba35d20ca92cb70581bf10c5731bc6549d895ec0
+PODFILE CHECKSUM: 08e8c005af8d580af5f235ace3c25f5bb09427d3
 
 COCOAPODS: 1.10.0

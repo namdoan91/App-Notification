@@ -10,6 +10,7 @@ import Alamofire
 import SwiftyJSON
 import Kingfisher
 import SafariServices
+import SVGKit
 
 class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
     var session1 = ""
@@ -17,15 +18,12 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
     var msnv:String = ""
     var tenUser: String = ""
     let host = "https://id.mvpapp.vn/"
-    
     var content = [String]()
     var id = ""
     var link = [String]()
     var tieuDe = [String]()
     var created_at = [String]()
-    
     let margin:CGFloat = 20
-
     let containerView:UIView = {
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +33,8 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
     let tableView:UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.layer.cornerRadius = 15
+        tableView.layer.cornerRadius = 40
+        tableView.backgroundColor = UIColor.lightGray
         return tableView
     }()
     let topView: UIView = {
@@ -45,7 +44,6 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         topView.layer.cornerRadius = 15
         return topView
     }()
-    
     let avatarImage: UIImageView = {
         let avatarImage = UIImageView()
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +51,6 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         avatarImage.contentMode = .scaleAspectFill
         return avatarImage
     }()
-    
     let msnvText: UILabel = {
         let msnvLable = UILabel()
         msnvLable.translatesAutoresizingMaskIntoConstraints = false
@@ -77,6 +74,8 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         logout.setTitleColor(UIColor.blue, for: .normal)
         return logout
     }()
+    var uiImage = ""
+    let cellSpacingHeight: CGFloat = 5
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -91,8 +90,10 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
         avatarImage.layer.cornerRadius = 25
         msnvText.text = "MSNV: \(msnv)"
         tenUserLabel.text = tenUser
-        
         logoutBtn.addTarget(self, action: #selector(dangLogout), for: .touchUpInside)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(red:0.898, green:0.898, blue:0.898, alpha: 1.000)
+        
     }
     func addSub(){
         view.addSubview(containerView)
@@ -167,19 +168,14 @@ class HomeViewController: UIViewController, SFSafariViewControllerDelegate {
                     let json = JSON(object)
                 for item in json["notification"].arrayValue{
                     strongSelf.content.append(item["content"].stringValue)
-                    print(strongSelf.content)
                     strongSelf.id.append(item["id"].stringValue)
-                    print(strongSelf.id)
                     strongSelf.link.append(item["link"].stringValue)
-                    print(strongSelf.link)
                     strongSelf.tieuDe.append(item["title"].stringValue)
                     strongSelf.created_at.append(item["created_at"].stringValue)
                     strongSelf.tableView.reloadData()
                 }
                 case .failure(let err):
                     print(err.localizedDescription)
-//                let alert = UIAlertController(title: "Thông Báo", message: "Tài khoản hoặc mật khẩu không đúng", preferredStyle: UIAlertController.Style.alert)
-//                alert.addAction(UIAlertAction(title: "Quay Lại Đăng Nhập", style: UIAlertAction.Style.default, handler: nil))
             }
         }
     }
@@ -201,16 +197,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
         cell.contentLabel.text = content[indexPath.row]
         cell.titleNewLabel.text = tieuDe[indexPath.row]
-//        cell.timerLabel.text = created_at[indexPath.row]
         let updateDate = convertToString(dateString: "\(created_at[indexPath.row])", formatIn: "yyyy-MM-dd hh:mm:ss", formatOut: "dd-MM-yyyy HH:mm")
         cell.timerLabel.text = updateDate
-        
-
+        if cell.titleNewLabel.text == "MVPAPP.VN"{
+            cell.avatarTitle.image = UIImage(named: "blue_chart")
+            print("In dữ liệu tấm hình: \(String(describing: cell.avatarTitle.image))")
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
         return UITableView.automaticDimension
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return cellSpacingHeight
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let indexPath = tableView.indexPathForSelectedRow
