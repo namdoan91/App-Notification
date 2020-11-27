@@ -1,44 +1,38 @@
 PODS:
-  - Alamofire (5.3.0)
-  - CocoaLumberjack (3.7.0):
-    - CocoaLumberjack/Core (= 3.7.0)
-  - CocoaLumberjack/Core (3.7.0)
+  - Alamofire (5.4.0)
   - JGProgressHUD (2.2)
+  - KeychainAccess (4.2.1)
   - Kingfisher/Core (5.15.7)
   - Kingfisher/SwiftUI (5.15.7):
     - Kingfisher/Core
-  - ProgressHUD (13.4)
-  - SVGKit (2.1.1):
-    - CocoaLumberjack (~> 3.0)
   - SwiftyJSON (5.0.0)
+  - TransitionButton (0.5.3)
 
 DEPENDENCIES:
   - Alamofire
   - JGProgressHUD
+  - KeychainAccess
   - Kingfisher/SwiftUI
-  - ProgressHUD
-  - SVGKit
   - SwiftyJSON
+  - TransitionButton
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - CocoaLumberjack
     - JGProgressHUD
+    - KeychainAccess
     - Kingfisher
-    - ProgressHUD
-    - SVGKit
     - SwiftyJSON
+    - TransitionButton
 
 SPEC CHECKSUMS:
-  Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
-  CocoaLumberjack: e8955b9d337ac307103b0a34fd141c32f27e53c5
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
+  KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   Kingfisher: 6e1a13523fcb1c86924ce53affe4ac957e544d59
-  ProgressHUD: 137a7fc677487c5581668f4490563124fb35c232
-  SVGKit: 652cdf7bef8bec8564d04a8511d3ab50c7595fac
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  TransitionButton: 36283346e17c64775a1b3bc3a7a72940a367de1f
 
-PODFILE CHECKSUM: 08e8c005af8d580af5f235ace3c25f5bb09427d3
+PODFILE CHECKSUM: c4ede9f3f652bb140ca303ad71d10bb22b5c3d7d
 
 COCOAPODS: 1.10.0

@@ -9,8 +9,10 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import JGProgressHUD
+import KeychainAccess
+
 class ViewController: UIViewController {
-    
+     
     let containerView: UIView = {
         let container = UIView()
         container.backgroundColor = UIColor(red:0.898, green:0.898, blue:0.898, alpha: 1.000)
@@ -116,8 +118,6 @@ class ViewController: UIViewController {
         addSubView()
         setLayout()
         dangNhapbtnLogin.addTarget(self, action: #selector(btnLogin), for: .touchUpInside)
-
-        
         qmkButton.addTarget(self, action: #selector(qmkBt), for: .touchUpInside)
     }
     func addSubView(){
@@ -179,57 +179,74 @@ class ViewController: UIViewController {
         
         
     }
+
     @objc func qmkBt(){
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let qmk = storyboard.instantiateViewController(identifier: "ForgetViewController") as! ForgetViewController
         present(qmk, animated: true, completion: nil)
     }
     @objc func btnLogin(){
-        let hud = JGProgressHUD()
-        hud.textLabel.text = "Loading"
-//        if (dangNhapText.text! == "" || matkhatText.text! == ""){
-//            hud.dismiss(afterDelay: 0.0)
-//            let alert = UIAlertController(title: "Thông Báo", message: "Vui Lòng Điền Thông Tin", preferredStyle: UIAlertController.Style.alert)
-//            alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//            return;
-//        }
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
-        let url = "https://id.mvpapp.vn/api/v1/system/Login"
-//        let par = ["username": dangNhapText.text!,
-//                   "password": matkhatText.text!]
-        let par = ["username": "6006",
-                   "password": "170917"]
-        AF.request(url, method: .post,parameters: par,encoding: JSONEncoding.default).validate(statusCode: 200..<300).responseJSON{ [weak self]
-                response in
-            guard let strongSelf = self else {return}
-                switch response.result {
-                case .success(let value):
-                        let json = JSON(value)
-                    if json["CODE"].stringValue == "LOGIN_FAILED"{
-                       hud.dismiss(afterDelay: 0.0)
-                        let alert = UIAlertController(title: "Thông Báo", message: "Tài Khoản Hoặc Mật Khẩu Không Đúng", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
-                        strongSelf.present(alert, animated: true, completion: nil)
-                        return;
-                    }
-                    if json["CODE"].stringValue == "SUCCESS"{
-                        strongSelf.session = json["session_key"].stringValue
-                        strongSelf.avatarView = json["userData"]["avatar"].stringValue
-                        strongSelf.msNV = json["userData"]["emp_id"].stringValue
-                        strongSelf.tenNv = json["userData"]["name"].stringValue
-                        vc.initData(session: strongSelf.session)
-                        vc.initDataImage(avatarView: strongSelf.avatarView)
-                        vc.initMsnv(msNV: strongSelf.msNV)
-                        vc.initTenNV(tenNv: strongSelf.tenNv)
-                        vc.modalPresentationStyle = .fullScreen
-                        strongSelf.present(vc, animated: true, completion: .none)
-                    }
-                case .failure(let err):
-                    print(err.localizedDescription)
-                    break
+        let qualityOfServiceClass = DispatchQoS.QoSClass.background
+        let backgroundQueue = DispatchQueue.global(qos: qualityOfServiceClass)
+        backgroundQueue.async(execute: {
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+
+                if (self.dangNhapText.text! == "" || self.matkhatText.text! == ""){
+                    let alert = UIAlertController(title: "Thông Báo", message: "Vui Lòng Điền Thông Tin", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    return;
                 }
-            }
+                let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(identifier: "HomeViewController") as! HomeViewController
+                let url = "https://id.mvpapp.vn/api/v1/system/Login"
+                let par = ["username": self.dangNhapText.text!,
+                           "password": self.matkhatText.text!]
+                //        let par = ["username": "6006",
+                //                   "password": "170917"]
+                
+                AF.request(url, method: .post,parameters: par,encoding: JSONEncoding.default).validate(statusCode: 200..<300).responseJSON{ [weak self]
+                    response in
+                    guard let strongSelf = self else {return}
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        if json["CODE"].stringValue == "LOGIN_FAILED"{
+                            let alert = UIAlertController(title: "Thông Báo", message: "Tài Khoản Hoặc Mật Khẩu Không Đúng", preferredStyle: UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Quay Lại", style: UIAlertAction.Style.default, handler: nil))
+                            strongSelf.present(alert, animated: true, completion: nil)
+                            return;
+                        }
+                        if json["CODE"].stringValue == "SUCCESS"{
+                            strongSelf.session = json["session_key"].stringValue
+                            strongSelf.avatarView = json["userData"]["avatar"].stringValue
+                            strongSelf.msNV = json["userData"]["emp_id"].stringValue
+                            strongSelf.tenNv = json["userData"]["name"].stringValue
+                            vc.initData(session: strongSelf.session)
+                            vc.initDataImage(avatarView: strongSelf.avatarView)
+                            vc.initMsnv(msNV: strongSelf.msNV)
+                            vc.initTenNV(tenNv: strongSelf.tenNv)
+                            let username = strongSelf.dangNhapText.text!
+                            if  username == strongSelf.dangNhapText.text!{
+                                
+                                vc.modalPresentationStyle = .fullScreen
+                                strongSelf.present(vc, animated: true, completion: .none)
+                            }else{
+                                let alert = UIAlertController(title: "Alert", message: "Email or password is not matching", preferredStyle: .alert)
+                                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                alert.addAction(ok)
+                                strongSelf.present(alert, animated: true, completion: nil)
+                            }
+                            
+                            
+                        }
+                    case .failure(let err):
+                        print(err.localizedDescription)
+                        break
+                    }
+                }
+            })
+        })
     }
 }

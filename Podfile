@@ -6,10 +6,11 @@ target 'App Notification' do
   use_frameworks!
 
   # Pods for App Notification
-   pod 'Alamofire'
+	pod 'Alamofire'
    pod 'SwiftyJSON'
    pod 'Kingfisher/SwiftUI'	
    pod 'JGProgressHUD'	
-   pod 'SVGKit'	
-   pod 'ProgressHUD'		
+   pod 'KeychainAccess'
+   pod 'TransitionButton'
+
 end
